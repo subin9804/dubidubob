@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/fefbaa8eb2.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>web homework</title>
+</head>
+<body>
+    <!-- header -->
+    <header>
+        <div class="top">
+            <div class="hleft head-icon">
+                <i class="fa-solid fa-bars"></i>
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+            <div class="logo">
+                <a href="#">
+                    <img src="img/logo.png" alt="뉴마커스 로고">
+                </a>
+            </div>
+            <div class="hright head-icon">
+                <i class="fa-regular fa-user"></i>
+                <i class="fa-sharp fa-solid fa-cart-shopping"></i>
+            </div>
+        </div>
+        <nav id="header-nav">
+            <ul>
+                <li><a href="#">제품 구매</a></li>
+                <li><a href="#">질문과 답변</a></li>
+                <li><a href="#">구매후기</a></li>
+                <li><a href="#">고객센터</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <aside class="hidden">
+        <div id="back">
+            <div class="aside-top">
+                <img src="img/logo.png" alt="뉴마커스 로고">
+                <div class="hright head-icon">
+                    <i class="fa-regular fa-user"></i>
+                    <i class="fa-sharp fa-solid fa-cart-shopping"></i>
+                </div>
+            </div>
+            <div id="contents">
+                <a href="#">에어간판</a>
+                <a href="#">실사출력</a>
+                <a href="#">현수막&배너</a>
+                <a href="#">인쇄홍보물</a>
+                <a href="#">대량발주건</a>
+                <a href="#">기획상품</a>
+                <a href="#">특가상품</a>
+                <a href="#">마켓</a>
+                <a href="#">개인결제</a>
+            </div>
+            
+            <span></span>
+
+            <div id="nav-box">
+                <a href="#">
+                    <span><i class="fa-solid fa-question"></i></span>
+                    자주묻는 질문
+                </a>
+                <a href="#">
+                    <span><i class="fa-regular fa-comments"></i></span>
+                    질문과 답변
+                </a>
+                <a href="#">
+                    <span><i class="fa-regular fa-pen-to-square"></i></span>
+                    구매 후기
+                </a>
+                <a href="#">
+                    <span><i class="fa-sharp fa-solid fa-hammer"></i></span>
+                    제품 사용 설명서
+                </a>
+                <a href="#">
+                    <span><i class="fa-solid fa-bullhorn"></i></span>
+                    공지사항
+                </a>
+            </div>
+        </div>
+        <span>&times;</span>
+    </aside>
+
+
+    <main>
+        <!-- image slider -->
+        <div id="slider">
+            <div id="image-list">
+                <img src="img/main1.jpg" alt="적립금">
+                <img class="hidden" src="img/main2.jpg" alt="바겐세일">
+                <img class="hidden" src="img/main3.jpg" alt="홍보용이미지">
+            </div>
+            <div id="arrow">
+                <button id="prev" class="hidden" onclick="f(-1)">&#10094;</button>
+                <button id="next" onclick="f(1)">&#10095;</button>
+            </div>
+
+            <nav class="dots">
+                <div class="dot active"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </nav>
+        </div>
+
+        <!-- contents -->
+        <div id="contents">
+            <a href="#">에어간판</a>
+            <a href="#">실사출력</a>
+            <a href="#">현수막&배너</a>
+            <a href="#">인쇄홍보물</a>
+            <a href="#">대량발주건</a>
+            <a href="#">기획상품</a>
+            <a href="#">특가상품</a>
+            <a href="#">마켓</a>
+            <a href="#">개인결제</a>
+        </div>
+
+        <!-- banner01 -->
+        <div class="banner01">
+            <a href="#">
+                <img src="img/banner1.jpg" alt="">
+            </a>
+            <div class="banner2">
+                <a href="#">
+                    <img src="img/banner2.jpg" alt="">
+                </a>
+                <a href="#">
+                    <img src="img/banner3.jpg" alt="">
+                </a>
+            </div>
+        </div>
+
+        <!-- best-goods -->
+        <div id="best-goods">
+            <h3>베스트 상품</h3>
+            <ul>
+                <li>
+                    <a href="#">
+                        <img class="goods" src="img/couch.jpg" alt="리클라이너">
+                        <div>
+                            <div>
+                                <b>99,000</b>원~
+                                <p>1인용 리클라이너</p>
+                            </div>
+                            <div class="stars">
+                                <img src="img/star.png" alt="">
+                                <img src="img/star.png" alt="">
+                                <img src="img/star.png" alt="">
+                                <img src="img/star.png" alt="">
+                                <img src="img/star.png" alt="">
+
+                                <div class="review">
+                                    1,042 리뷰
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img class="goods" src="img/chair.jpg" alt="리클라이너">
+                        <div>
+                            <div>
+                                <b>45,350</b>원~
+                                <p>관상용 스트링 체어</p>
+                            </div>
+                            <div class="stars">
+                                <img src="img/star.png" alt="">
+                                <img src="img/star.png" alt="">
+                                <img src="img/star.png" alt="">
+                                <img src="img/star.png" alt="">
+                                <img src="img/star.png" alt="">
+
+                                <div class="review">
+                                    2,702 리뷰
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img class="goods" src="img/chair.jpg" alt="리클라이너">
+                        <div>
+                            <div>
+                                <b>249,000</b>원~
+                                <p>대리석테이블 및 타일체어 세트</p>
+                            </div>
+                            <div class="stars">
+                                <img src="img/star.png" alt="">
+                                <img src="img/star.png" alt="">
+                                <img src="img/star.png" alt="">
+                                <img src="img/star.png" alt="">
+                                <img src="img/star.png" alt="">
+
+                                <div class="review">
+                                    183 리뷰
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img class="goods" src="img/sofa.jpg" alt="리클라이너">
+                        <div>
+                            <div>
+                                <b>16,4900</b>원~
+                                <p>고양이 침대</p>
+                            </div>
+                            <div class="stars">
+                                <img src="img/star.png" alt="">
+                                <img src="img/star.png" alt="">
+                                <img src="img/star.png" alt="">
+                                <img src="img/star.png" alt="">
+                                <img src="img/star.png" alt="">
+
+                                <div class="review">
+                                    870 리뷰
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+            <button>더보기</button>
+        </div>
+
+        <!-- banner02 -->
+        <div class="banner02">
+            <img src="img/birds.jpg" alt="배너2">
+            <button>상품 상세보기</button>
+        </div>
+
+        <!-- recomended-goods -->
+        <div id="reco">
+            <h3>추천 상품</h3>
+            <ul>
+                <li>
+                    <a href="#">
+                        <img class="goods" src="img/couch.jpg" alt="리클라이너">
+                        <div>
+                            <div>
+                                <b>99,000</b>원~
+                                <p>1인용 리클라이너</p>
+                            </div>
+                            <div class="stars">
+                                <img src="img/star.png" alt="">
+                                <img src="img/star.png" alt="">
+                                <img src="img/star.png" alt="">
+                                <img src="img/star.png" alt="">
+                                <img src="img/star.png" alt="">
+    
+                                <div class="review">
+                                    1,042 리뷰
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img class="goods" src="img/couch.jpg" alt="리클라이너">
+                        <div>
+                            <div>
+                                <b>99,000</b>원~
+                                <p>1인용 리클라이너</p>
+                            </div>
+                            <div class="stars">
+                                <img src="img/star.png" alt="">
+                                <img src="img/star.png" alt="">
+                                <img src="img/star.png" alt="">
+                                <img src="img/star.png" alt="">
+                                <img src="img/star.png" alt="">
+    
+                                <div class="review">
+                                    1,042 리뷰
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img class="goods" src="img/sofa.jpg" alt="리클라이너">
+                        <div>
+                            <div>
+                                <b>99,000</b>원~
+                                <p>1인용 리클라이너</p>
+                            </div>
+                            <div class="stars">
+                                <img src="img/star.png" alt="">
+                                <img src="img/star.png" alt="">
+                                <img src="img/star.png" alt="">
+                                <img src="img/star.png" alt="">
+                                <img src="img/star.png" alt="">
+    
+                                <div class="review">
+                                    1,042 리뷰
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </main>
+    <footer>
+        <!-- contact -->
+        <ul class="contact">
+            <li>
+                <img src="img/logo2.png" alt="로고">
+            </li>
+            <li class="phone">032.765.1884<i class="fa-solid fa-phone"></i></li>
+            <li>입금정보: 카카오뱅크 0000-02-0000000 &copy;주식회사짱</li>
+            <li>사업자 정보 <button>▽</button></li>
+        </ul>
+
+        <div id="info" class="h-0 hidden">
+            <table>
+                <tr>
+                    <td scope="row">대표</td>
+                    <td>이수빈</td>
+                </tr>
+                <tr>
+                    <td scope="row">주소</td>
+                    <td>경기도 부천시</td>
+                </tr>
+                <tr>
+                    <td scope="row">사업자 등록번호</td>
+                    <td>000-0000-00 사업자번호조회</td>
+                </tr>
+                <tr>
+                    <td scope="row">문의</td>
+                    <td>ask@naver.com</td>
+                </tr>
+                <tr>
+                    <td scope="row">Fax.</td>
+                    <td>000-000-0000</td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="links">
+            <a href="#">회사소개</a>
+            <a href="#">이용약관</a>
+            <a href="#">개인정보처리방침</a>
+            <a href="#">PC버전</a>
+        </div>
+    </footer>
+
+    <!-- quick-menu -->
+    <div id="quick-menu">
+        <img src="img/top.png" alt="top">
+        <img src="img/cs.png" alt="cs">
+        <img src="img/webhard.png" alt="webhard">
+        <img src="img/kakao.png" alt="kakaotalk">
+    </div>
+
+
+    <!-- bottom-bar -->
+    <div id="bottom-bar">
+        <div>
+            <i class="fa-solid fa-bars"></i>
+        </div>
+        <div>
+            <i class="fa-regular fa-pen-to-square"></i>
+            <p>구매후기</p>
+        </div>
+        <div>
+            <i class="fa-regular fa-comments"></i>
+            <p>질문과 답변</p>
+        </div>
+        <div>
+            <i class="fa-solid fa-truck-fast"></i>
+            <p>주문/배송</p>
+        </div>
+        <div>
+            <i class="fa-regular fa-user"></i>
+            <p>로그인</p>
+        </div>
+    </div>
+</body>
+</html>
