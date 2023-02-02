@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <!-- HEADER -->
+    <div class="fixed top-0 left-0 w-full z-10">
+        <div class="flex h-12 items-center bg-gray-600">
+            <div class="w-60">
+                <h1 class="text-2xl text-white text-center">DASHBORAD</h1>
+            </div>
+            <form action="" class="grow">
+                <!-- grow를 적용함으로서 남는 부분들을 차지하게 됨 -->
+                <input type="text" class="w-96 h-10 px-4 outline-none" placeholder="Search">
+            </form>
+        </div>
+    </div>
+
+    <!-- SIDE BAR -->
+    <div class="fixed top-0 left-0 h-full w-60 border-r hidden lg:block">
+        <!-- header에 z-index를 적용했기 때문에 둘 다 fixed여도 포지션 경쟁이 발생하지 않는다 -->
+        <ul class="pt-20 pl-4 h-full">
+            <li><a href="#" class="block p-2 hover:bg-gray-200">Link</a></li>
+            <li><a href="#" class="block p-2 hover:bg-gray-200">Link</a></li>
+            <li><a href="#" class="block p-2 hover:bg-gray-200">Link</a></li>
+            <li><a href="#" class="block p-2 hover:bg-gray-200">Link</a></li>
+        </ul>
+    </div>
+
+    <!-- MAIN -->
+    <div class="max-w-5xl lg:ml-60 pt-20 px-4">
+        <!-- MESSAGE -->
+        <div class="bg-orange-100 border-l-4 border-l-orange-500 text-orange-700 p-4 mb-4">
+            <p class="font-bold">Be Warned</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae earum facere temporibus, facilis hic quod iusto esse nemo laborum illum, autem qui culpa, quisquam fuga corrupti modi odit maiores consectetur.</p>
+        </div>
+    </div>
+
+
+
+
+</body>
+</html>

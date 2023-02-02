@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/fefbaa8eb2.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
+    <script src="index.js"></script>
     <title>web homework</title>
 </head>
 <body>
@@ -13,7 +14,7 @@
     <header>
         <div class="top">
             <div class="hleft head-icon">
-                <i class="fa-solid fa-bars"></i>
+                <i class="fa-solid fa-bars" id="ham"></i>
                 <i class="fa-solid fa-magnifying-glass"></i>
             </div>
             <div class="logo">
@@ -37,7 +38,7 @@
     </header>
 
     <aside class="hidden">
-        <div id="back">
+        <div id="back" class="">
             <div class="aside-top">
                 <img src="img/logo.png" alt="뉴마커스 로고">
                 <div class="hright head-icon">
@@ -82,7 +83,7 @@
                 </a>
             </div>
         </div>
-        <span>&times;</span>
+        <span id="exit">&times;</span>
     </aside>
 
 
@@ -90,9 +91,9 @@
         <!-- image slider -->
         <div id="slider">
             <div id="image-list">
-                <img src="img/main1.jpg" alt="적립금">
-                <img class="hidden" src="img/main2.jpg" alt="바겐세일">
-                <img class="hidden" src="img/main3.jpg" alt="홍보용이미지">
+                <img  class="si" src="img/main1.jpg" alt="적립금">
+                <img class="hidden si" src="img/main2.jpg" alt="바겐세일">
+                <img class="hidden si" src="img/main3.jpg" alt="홍보용이미지">
             </div>
             <div id="arrow">
                 <button id="prev" class="hidden" onclick="f(-1)">&#10094;</button>
