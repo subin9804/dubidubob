@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import {Map, MapMarker, MapInfoWindow} from 'react-kakao-maps-sdk';
 import {
-  PieChart, 
+  PieChart,
   Pie,
   ComposedChart,
   Bar,
@@ -50,7 +50,7 @@ const seoulGuguns = [
   {name: "노원구", code: "1122"},
   {name: "도봉구", code: "1107"},
   {name: "동대문구", code: "1105"},
-  {name: "동작구", code: "1114"}, 
+  {name: "동작구", code: "1114"},
   {name: "마포구", code: "1110"},
   {name: "서대문구", code: "1109"},
   {name: "서초구", code: "1119"},
@@ -60,8 +60,8 @@ const seoulGuguns = [
   {name: "양천구", code: "1120"},
   {name: "영등포구", code: "1113"},
   {name: "용산구", code: "1103"},
-  {name: "은평구", code: "1108"}, 
-  {name: "종로구", code: "1101"}, 
+  {name: "은평구", code: "1108"},
+  {name: "종로구", code: "1101"},
   {name: "중구", code: "1102"},
   {name: "중랑구", code: "1121"}
 ]
@@ -72,8 +72,8 @@ export default function App() {
   const [data, setData] = useState(null);
   const [searchYearCd, setSearchYearCd] = useState(2021);
   const [guGun, setGuGun] = useState(1116);
-    
-        
+   
+       
   useEffect(() => {  
     setIsLoaded(false);
 
@@ -127,49 +127,78 @@ export default function App() {
 
   return (
     <div style={{margin: "1rem"}}>
-      <h1>{searchYearCd}년 서울특별시 {gugunName} 자전거 사고조회 &#128561;</h1>
+      <h2>{searchYearCd}년 서울특별시 {gugunName} 자전거 사고조회 &#128561;</h2>
 
-      <h2>조회하실 연도를 선택하십시오</h2>
+      {/* <h3>조회하실 연도를 선택하십시오</h3> */}
       <div className="">
         <button onClick={() => setSearchYearCd(searchYearCd - 1)}>&#10094; 이전년도</button>
         <button onClick={() => setSearchYearCd(searchYearCd + 1)} disabled={searchYearCd==2021}>다음년도 &#10095;</button>
       </div>
-        
+       
 
         <>
-          <p>{searchYearCd}년 전국에서 총 {data.items.item[0].tot_acc_cnt}건의 사고가 발생했습니다</p>
+          <p id='pc-p' className='pfs'>{searchYearCd}년 전국에서 총 {data.items.item[0].tot_acc_cnt}건의 사고가 발생했습니다</p>
 
-        <div className='w-28 relative'>
+        <div id='selector'>
           <button
-            className='border-solid border-2 border-indigo-600 rounded-2xl pl-4 py-2 w-28 block text-left'
             onClick={open}
           >{gugunName}   &#9661;</button>
-          <div 
-            id='list'
-            className="bg-white absolute hidden left-1.5 w-28 z-10 border-solid border-1"
-            >
+          <div id='list'>
             {seoulGuguns.map(gogun => (
-              <button 
+              <button
               onClick={() => handleSelect(gogun.code)}
-              className="block hover:bg-gray-300 p-2 w-28"
+              className="block hover:bg-yellow-600 p-2 w-full"
               >
                 {gogun.name}
               </button>
             ))}
           </div>
         </div>
-        
-         <h2>Chart</h2>
+       
+        <div id='pc-info' className='cm cm-bc border'>
+        <div className='chart cm-bc border ch-r'>
+         <h2 className='h2pl mb cm-bc td'>Chart</h2>
+         <div className='cm-bc'>
           <h3>{gugunName} 총 사고건수: {allAcc}</h3>
           <Rechart
             allAcc={allAcc}
             kidAcc={kidAcc}
             oldAcc={oldAcc}
             gugunName={gugunName}
-          />
-        </>
-      
-    </div>  
+            />
+            </div>
+          </div>
+
+         <div className='chart ch-l map'>
+          <h2 className='h2pl td'>지도</h2>
+            <p className='h2pl'>지도를 확대 또는 축소할 수 있습니다</p>
+            {/* <KakaoMap accidents={data.items.item} /> */}
+          </div>
+        </div>
+
+      <div id='mobile-info'>
+        <div className='chart mo-chart cm-bc border ch-r'>
+         <h2 className='h2pl mb cm-bc td'>Chart</h2>
+         <div className='cm-bc'>
+          <h3>{gugunName} 총 사고건수: {allAcc}</h3>
+          <Rechart
+            allAcc={allAcc}
+            kidAcc={kidAcc}
+            oldAcc={oldAcc}
+            gugunName={gugunName}/>
+          </div>
+
+          <div className='chart mo-map cm-bc'>
+          <h2 className='h2pl td cm-bc'>지도</h2>
+            <p className='h2pl cm-bc'>지도를 확대 또는 축소할 수 있습니다</p>
+            {/* <KakaoMap accidents={data.items.item} /> */}
+          </div>
+        </div>
+      </div>
+
+      </>
+    </div>
+       
   )
 }
 
@@ -178,7 +207,7 @@ function Rechart(props) {
 
 
   console.log(`${props.allAcc}`);
-  
+ 
   const chartData = [
     {
       name: `${props.gugunName}`,
@@ -194,18 +223,18 @@ function Rechart(props) {
 
   return (
     <>
-      <div style={{ height: "300px" }}>
-        <ResponsiveContainer width="50%" height="90%">
+      <div style={{ height: "450px" }}>
+        <ResponsiveContainer width="100%" height="100%">
           <ComposedChart
             layout="vertical"
             width={500}
-            height={400}
+            height={300}
             data={chartData}
             margin={{
-              top: 20,
-              right: 50,
-              bottom: 20,
-              left: 50
+              top: 5,
+              right: 30,
+              bottom: 5,
+              left: 20
             }}
             >
               <CartesianGrid stroke="#f5f5f5" />
@@ -219,6 +248,7 @@ function Rechart(props) {
           </ComposedChart>
         </ResponsiveContainer>
       </div>
+
       {/* <div style={{ height: "300px" }}>
         <ResponsiveContainer width="50%" height="90%">
           <PieChart width={400} height={400}>
@@ -237,5 +267,4 @@ function Rechart(props) {
       </div> */}
   </>
   );
-  
 }
