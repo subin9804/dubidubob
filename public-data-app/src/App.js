@@ -17,28 +17,6 @@ import {
   ResponsiveContainer
 } from "recharts";
 
-
-function fetchData(searchYearCd, guGun) {
-
-  const endPoint = 'http://apis.data.go.kr/B552061/lgStat/getRestLgStat'
-  const serviceKey = process.env.REACT_APP_SERVICE_KEY;
-  const type = 'json';
-  const numOfRows = 13;
-  const siDo = 1100;
-  const pageNo = 1;
-
-  const promise = fetch(`${endPoint}?serviceKey=${serviceKey}&searchYearCd=${searchYearCd}&siDo=${siDo}&guGun=${guGun}&type=${type}&numOfRows=${numOfRows}&pageNo=${pageNo}`)
-    .then(res => {
-      if (!res.ok) {
-        throw res;
-      }
-      return res.json();
-    })
-
-  return promise;
-}
-
-
 const seoulGuguns = [
   {name: "강남구", code: "1116"},
   {name: "강동구", code: "1117"},
@@ -68,20 +46,49 @@ const seoulGuguns = [
 ]
 
 
-
 export default function App() {
+  const endPoint = 'http://apis.data.go.kr/B552061/lgStat/getRestLgStat'
+  const serviceKey = process.env.REACT_APP_SERVICE_KEY;
+  const type = 'json';
+  const numOfRows = 13;
+  const siDo = 1100;
+  const pageNo = 1;
+  
+  
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [data, setData] = useState(null);
+  const [seoulData,setseoulData] = useState(null);
   const [searchYearCd, setSearchYearCd] = useState(2021);
   const [guGun, setGuGun] = useState(1116);
-       
+  
+  const url1 = `${endPoint}?serviceKey=${serviceKey}&searchYearCd=${searchYearCd}&siDo=${siDo}&guGun=${guGun}&type=${type}&numOfRows=${numOfRows}&pageNo=${pageNo}`
+  const url2 = `http://apis.data.go.kr/B552061/lgStat/getRestLgStat?serviceKey=${serviceKey}&searchYearCd=${searchYearCd}&siDo=1100&guGun=&type=json&numOfRows=13&pageNo=1`
+
   useEffect(() => {  
     setIsLoaded(false);
 
-    fetchData(searchYearCd, guGun)
-    .then(data => {
-      setData(data);
+    fetch(url1)
+    .then(res => {
+      if (!res.ok) {
+        throw res;
+      }
+      return res.json();
+    })
+    .then(json => {
+      setData(json);
+      console.log("First", json);
+      return fetch(url2);
+    })
+    .then(res => {
+      if (!res.ok) {
+        throw res;
+      }
+      return res.json();
+    })
+    .then(json => {
+      setseoulData(json);
+      console.log("Second", json);
     })
     .catch(error => {
       setError(error)
@@ -101,8 +108,9 @@ export default function App() {
   }
 
   console.log(data)
+  console.log(seoulData.items.item[0].acc_cnt)
 
-// 연도별, 대상별 사고건수
+  // 연도별, 대상별 사고건수
   let allAcc = `${data.items.item[0].acc_cnt}`;
   console.log(searchYearCd,data.items.item[0].sido_sgg_nm,"전체사고",allAcc);
 
@@ -116,7 +124,6 @@ export default function App() {
   const handleSelect = (code) => {
     setGuGun(code)
   }
- 
 
   function open() {
     const list = document.getElementById("list")
@@ -126,7 +133,7 @@ export default function App() {
 
   return (
     <div style={{margin: "1rem"}}>
-      <h2>{searchYearCd}년 서울특별시 {gugunName} 자전거 사고조회 &#128561;</h2>
+      <h2>{searchYearCd}년 서울특별시 {gugunName} 어린이 사고조회 &#128561;</h2>
 
       {/* <h3>조회하실 연도를 선택하십시오</h3> */}
       <div className="">
@@ -145,6 +152,7 @@ export default function App() {
           <div id='list' className='hidden'>
             {seoulGuguns.map(gogun => (
               <button
+              key={gogun.code}
               onClick={() => handleSelect(gogun.code)}
               className="block hover:bg-yellow-600 p-2 w-full"
               >
@@ -156,145 +164,138 @@ export default function App() {
        
         <div id='pc-info' className='cm cm-bc border'>
           <div className='chart cm-bc border ch-r'>
-            <h2 className='h2pl mb cm-bc td'>Chart</h2>
+            <h2 className='h2pl mb cm-bc td p-4 text-xl'>Chart▶</h2>
             <div className='cm-bc'>
-              <h3>{gugunName} 총 사고건수: {allAcc}</h3>
+              <h3 className='text-center mb-8'><span className='text-xl border-b-[4px] border-black p-2'><a className='font-bold text-3xl'>{gugunName}</a> 총 사고건수: {allAcc}</span></h3>
               <Rechart
-                allAcc={allAcc}
-                kidAcc={kidAcc}
                 gugunName={gugunName}
-                accidents={data.items}
-                searchYearCd={searchYearCd}
+                data={data.items.item}
+                seoulData={seoulData.items.item}
               />
             </div>
           </div>
 
          <div className='chart ch-l map'>
-          <h2 className='h2pl td'>지도</h2>
+         <h2 className='h2pl mb cm-bc td p-4 text-xl'>Map▶</h2>
             <p className='h2pl'>지도를 확대 또는 축소할 수 있습니다</p>
             {/* <KakaoMap accidents={data.items.item} /> */}
           </div>
         </div>
 
-      <div id='mobile-info'>
-        <div className='chart mo-chart cm-bc border ch-r'>
-         <h2 className='h2pl mb cm-bc td'>Chart</h2>
-         <div className='cm-bc'>
-          <h3>{gugunName} 총 사고건수: {allAcc}</h3>
-          {/* <Rechart
-            gugunData={data}
-            gugunName={gugunName}/> */}
+        <div id='mobile-info'>
+          <div className='chart mo-chart cm-bc border ch-r'>
+          <h2 className='h2pl mb cm-bc td p-4 text-xl mb-8'>Chart▶</h2>
+          <div className='cm-bc'>
+            <h3 className='text-center'><span className='text-xl border-b-[4px] border-black p-2'><a className='font-bold text-3xl'>{gugunName}</a> 총 사고건수: {allAcc}</span></h3>
+            <Rechart
+              gugunName={gugunName}
+              data={data.items.item}
+              seoulData={seoulData.items.item}
+            />
           </div>
 
-          <div className='chart mo-map cm-bc'>
-          <h2 className='h2pl td cm-bc'>지도</h2>
-            <p className='h2pl cm-bc'>지도를 확대 또는 축소할 수 있습니다</p>
-            {/* <KakaoMap accidents={data.items.item} /> */}
+            <div className='chart mo-map cm-bc'>
+            <h2 className='h2pl mb cm-bc td p-4 text-xl'>Map▶</h2>
+              <p className='h2pl cm-bc'>지도를 확대 또는 축소할 수 있습니다</p>
+              {/* <KakaoMap accidents={data.items.item} /> */}
+            </div>
           </div>
         </div>
-      </div>
-
       </>
     </div>
        
   )
 }
 
-function fData(searchYearCd) {
-  const serviceKey = process.env.REACT_APP_SERVICE_KEY;
-  const promise = fetch(`http://apis.data.go.kr/B552061/lgStat/getRestLgStat?serviceKey=${serviceKey}&searchYearCd=${searchYearCd}&siDo=1100&guGun=&type=json&numOfRows=13&pageNo=1`)
-    .then(res => {
-      if (!res.ok) {
-        throw res;
-      }
-      return res.json();
-    })
-  return promise;
-}
 
 function Rechart(props) {
-  const [sidoData, setSidoData] = useState(null);
-  const [error, setError] = useState(null);
-  
-  useEffect(() => {  
-    fData(props.searchYearCd)
-    .then(data => {
-      setSidoData(data);
-    })
-    .catch(error => {
-      setError(error)
-    })
-  }, [])
-  if (error) {
-    return <p>failed to fetch</p>
-  }
 
-  console.log(sidoData.items.item[0].acc_cnt);
+  let seoulData = props.seoulData;
+  let data = props.data;
+  let gugunName = props.gugunName;
+  let d1 = Math.round((data[0].acc_cnt/seoulData[0].acc_cnt)*100)
+  let d2 = Math.round((data[1].acc_cnt/data[0].acc_cnt)*100)
+  let d3 = Math.round((data[1].acc_cnt/seoulData[1].acc_cnt)*100)
+  // console.log(seoulData[0].acc_cnt)
+  // console.log(data[0].acc_cnt)
+  // console.log(d3)
 
-
-  console.log(`${props.allAcc}`);
- 
   const data01 = [
-  { name: 'Group A', value:300},
-  { name: 'Group B', value: 300 },
+  { name: 'Group A', value: (100-d1)},
+  { name: '서울시 대비 강남구 사고', value: d1},
+  ];
+  const data02 = [
+  { name: 'Group A', value: (100-d2)},
+  { name: '강남구 총사고 대비 어린이사고', value: d2 },
+  ];
+  const data03 = [
+  { name: 'Group A', value:(100-d3)},
+  { name: '서울시 대비 강남구 어린이사고', value: d3 },
   ];
 
-
-  // const data02 = [
-  //   {name: "Group A", value: 400},
-  //   {name: "전국대비 강남구 어린이사고", value: `${props.kidAcc/props.accidents.item[1].tot_acc_cnt}`,}
-    
-  // ];
-  // const data03 = [
-  //   {name: "a", value: 99}
-  //   {name: "강남구 사고 대비 어린이사고 비율", value: `${props.kidAcc/props.allAcc}`}
-  // ];
-
-
-  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+  // 차트 색깔
+  const COLORS = ['#000', '#F00'];
 
   return (
-    <div style={{ height: "500px" }}>
-      <ResponsiveContainer width="100%" height="100%">
-        <PieChart>
+    <div id='chartStyle' style={{ height: "550px", width: "100%" }}>
+      <div id="circle1">
+        <h3>서울시 대비 {gugunName} 총사고</h3>
+        <PieChart width={480} height={200}>
           <Pie
             dataKey="value"
-            isAnimationActive={false}
+            isAnimationActive={true}
             data={data01}
-            cx={500}
-            cy={350}
             outerRadius={80}
             fill="#8884d8"
-            label
+            label="post"
           >
             {data01.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
-          <Pie
-            dataKey="value"
-            isAnimationActive={false}
-            data={data01}
-            cx={150}
-            cy={350}
-            outerRadius={80}
-            fill="#8884d8"
-            label
-          />
-          <Pie
-            dataKey="value"
-            isAnimationActive={false}
-            data={data01}
-            cx={300}
-            cy={150}
-            outerRadius={80}
-            fill="#8884d8"
-            label
-          />
           <Tooltip />
         </PieChart>
-      </ResponsiveContainer>
+      </div>
+      
+      <div id="circles">
+        <div>
+          <PieChart width={250} height={200}>
+            <Pie
+              dataKey="value"
+              isAnimationActive={true}
+              data={data02}
+
+              outerRadius={80}
+              fill="#8884d8"
+              label
+              >
+              {data02.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+              ))}
+            </Pie>
+            <Tooltip />
+          </PieChart>
+          <h3>{gugunName} 총사고 대비 어린이사고</h3>
+        </div> 
+        <div>
+          <PieChart width={250} height={200}>
+            <Pie
+              dataKey="value"
+              isAnimationActive={true}
+              data={data03}
+              outerRadius={80}
+              fill="#8884d8"
+              label
+              >
+              {data03.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+              ))}
+            </Pie>
+            <Tooltip />
+          </PieChart>
+          <h3>서울시 대비 {gugunName} 어린이사고</h3>
+        </div>
+      </div>
     </div>
   );
-  
 }
