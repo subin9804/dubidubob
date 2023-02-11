@@ -18,31 +18,31 @@ import {
 } from "recharts";
 
 const seoulGuguns = [
-  {name: "강남구", code: "1116"},
-  {name: "강동구", code: "1117"},
-  {name: "강북구", code: "1124"},
-  {name: "강서구", code: "1111"},
-  {name: "관악구", code: "1115"},
-  {name: "광진구", code: "1123"},
-  {name: "구로구", code: "1112"},
-  {name: "금천구", code: "1125"},
-  {name: "노원구", code: "1122"},
-  {name: "도봉구", code: "1107"},
-  {name: "동대문구", code: "1105"},
-  {name: "동작구", code: "1114"},
-  {name: "마포구", code: "1110"},
-  {name: "서대문구", code: "1109"},
-  {name: "서초구", code: "1119"},
-  {name: "성동구", code: "1104"},
-  {name: "성북구", code: "1106"},
-  {name: "송파구", code: "1118"},
-  {name: "양천구", code: "1120"},
-  {name: "영등포구", code: "1113"},
-  {name: "용산구", code: "1103"},
-  {name: "은평구", code: "1108"},
-  {name: "종로구", code: "1101"},
-  {name: "중구", code: "1102"},
-  {name: "중랑구", code: "1121"}
+  {name: "강남구", code: "1116", latlng: {lat:37.51711212459071, lng: 127.04726867861118}},
+  {name: "강동구", code: "1117", latlng: {lat:37.53000261570808, lng:  127.12349803551115}},
+  {name: "강북구", code: "1124", latlng: {lat:37.53000261570808, lng:  127.12349803551115}},
+  {name: "강서구", code: "1111", latlng: {lat:37.55082005198832, lng: 126.84921718459985}},
+  {name: "관악구", code: "1115", latlng: {lat:37.47822047671565 , lng: 126.95123634579787}},
+  {name: "광진구", code: "1123", latlng: {lat:37.53848272752991, ling:127.08224480316936}},
+  {name: "구로구", code: "1112", latlng: {lat:37.49528501960699, ling:8871889057314}},
+  {name: "금천구", code: "1125", latlng: {lat: 37.456743695287145, lng: 126.89529416053222}},
+  {name: "노원구", code: "1122", latlng: {lat: 37.65421775524895, lng: 127.05610399576709}},
+  {name: "도봉구", code: "1107", latlng: {lat: 37.668572540460474, lng: 127.04706080878319}},
+  {name: "동대문구", code: "1105", latlng: {lat: 37.57445094922791, lng:127.03951659228395}},
+  {name: "동작구", code: "1114", latlng: {lat: 37.51240988759144, lng: 126.93917033610218}},
+  {name: "마포구", code: "1110", latlng: {lat:37.5662104544173 , lng: 126.90179668056012}},
+  {name: "서대문구", code: "1109", latlng: {lat:37.57908247946858 , lng: 126.93663459291378}},
+  {name: "서초구", code: "1119", latlng: {lat: 37.56341641036982, lng: 127.03687580686145}},
+  {name: "성동구", code: "1104", latlng: {lat: 37.5634618921049, lng: 127.03693525165414}},
+  {name: "성북구", code: "1106", latlng: {lat: 37.58927232396706, lng: 127.01667571243007 }},
+  {name: "송파구", code: "1118", latlng: {lat: 37.51445065467338, lng:127.10560080876512  }},
+  {name: "양천구", code: "1120", latlng: {lat:37.51692703834044 , lng:126.86635220719805}},
+  {name: "영등포구", code: "1113", latlng: {lat:37.526237358858246 , lng:  126.89619264545243 }},
+  {name: "용산구", code: "1103", latlng: {lat: 37.53233011720075, lng: 126.99046016852888 }},
+  {name: "은평구", code: "1108", latlng: {lat: 37.602550591128484, lng: 126.92868756725284}},
+  {name: "종로구", code: "1101", latlng: {lat:37.573259109005946, lng:126.97863683810121 }},
+  {name: "중구", code: "1102", latlng: {lat: 37.56376091808418, lng:  126.99753254663673 }},
+  {name: "중랑구", code: "1121", latlng: {lat: 37.60648208864871 , lng:  127.09267072022928 }}
 ]
 
 
@@ -150,13 +150,13 @@ export default function App() {
             onClick={open}
           >{gugunName}   &#9661;</button>
           <div id='list' className='hidden'>
-            {seoulGuguns.map(gogun => (
+            {seoulGuguns.map(gugun => (
               <button
-              key={gogun.code}
-              onClick={() => handleSelect(gogun.code)}
+              key={gugun.code}
+              onClick={() => handleSelect(gugun.code)}
               className="block hover:bg-yellow-600 p-2 w-full"
               >
-                {gogun.name}
+                {gugun.name}
               </button>
             ))}
           </div>
@@ -178,7 +178,12 @@ export default function App() {
          <div className='chart ch-l map'>
          <h2 className='h2pl mb cm-bc td p-4 text-xl'>Map▶</h2>
             <p className='h2pl'>지도를 확대 또는 축소할 수 있습니다</p>
-            {/* <KakaoMap accidents={data.items.item} /> */}
+            <KakaoMap 
+              accidents={data.items.item}
+              seoulData={seoulData.items.item}
+              gugunName={gugunName}
+              setGuGun={setGuGun}
+            />
           </div>
         </div>
 
@@ -194,16 +199,20 @@ export default function App() {
             />
           </div>
 
-            <div className='chart mo-map cm-bc'>
-            <h2 className='h2pl mb cm-bc td p-4 text-xl'>Map▶</h2>
-              <p className='h2pl cm-bc'>지도를 확대 또는 축소할 수 있습니다</p>
-              {/* <KakaoMap accidents={data.items.item} /> */}
+            <div className='chart mo-map cm-bc flex flex-col justify-center items-center'>
+              <h2 className='h2pl mb cm-bc td p-4 text-xl self-start'>Map▶</h2>
+              <p className='h2pl cm-bc mb-4 self-start'>지도를 확대 또는 축소할 수 있습니다</p>
+                <KakaoMap 
+                  accidents={data.items.item}
+                  seoulData={seoulData.items.item}
+                  gugunName={gugunName}
+                  setGuGun={setGuGun}
+                />
             </div>
           </div>
         </div>
       </>
-    </div>
-       
+    </div>    
   )
 }
 
@@ -298,4 +307,50 @@ function Rechart(props) {
       </div>
     </div>
   );
+}
+
+function KakaoMap(props) {
+  let data = props.accidents;
+  let setGuGun = props.setGuGun;
+  // return console.log(accidents)
+  console.log(data)
+
+
+  const handleSelect = (code) => {
+    setGuGun(code)
+  }
+
+  return (
+    <div style={{width:"100%", height:"550px"}}>
+      <Map // 지도를 표시할 Container
+        center={{
+          // 지도의 중심좌표
+          lat: 37.56682240068373,
+          lng: 126.97865225933727,
+        }}
+        style={{
+          // 지도의 크기
+          width: "100%",
+          height: "100%",
+        }}
+        level={9} // 지도의 확대 레벨
+      >
+        {seoulGuguns.map((position, index) => (
+          <MapMarker
+            key={`${position.name}-${position.latlng}`}
+            position={position.latlng} // 마커를 표시할 위치
+            image={{
+              src: "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png", // 마커이미지의 주소입니다
+              size: {
+                width: 24,
+                height: 35
+              }, // 마커이미지의 크기입니다
+            }}
+            title={position.name} // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+            onClick={() => handleSelect(position.code)}
+          />
+        ))}
+      </Map>
+    </div>
+  )
 }
