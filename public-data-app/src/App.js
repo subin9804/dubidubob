@@ -1,19 +1,12 @@
-import React, {useState, useContext, useEffect, useRef, PureComponent} from 'react';
+import React, {useState, useEffect} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import {Map, MapMarker, MapInfoWindow} from 'react-kakao-maps-sdk';
 import {
   Cell,
-  Sector,
   PieChart,
   Pie,
-  ComposedChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer
 } from "recharts";
 
