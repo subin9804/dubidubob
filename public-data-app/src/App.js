@@ -163,8 +163,6 @@ export default function App() {
       <div>
         <p id='pc-p' className='pfs'><span className='text-2xl'> {searchYearCd}년 </span> 전국에서 <span className='underline underline-offset-8'>총 {data.items.item[0].tot_acc_cnt}건</span>의 사고가 발생했습니다</p>
 
-
-
         <div id='pc-info' className='cm cm-bc border'>
           <div className='chart cm-bc border ch-r'>
             <h2 className='mb cm-bc td p-4 text-xl'>Chart▶</h2>
