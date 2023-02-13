@@ -103,16 +103,19 @@ export default function App() {
   console.log(data)
   console.log(seoulData.items.item[0].acc_cnt)
 
-  // 연도별, 대상별 사고건수
+  // 구군별 총사고건수
   let allAcc = `${data.items.item[0].acc_cnt}`;
   console.log(searchYearCd,data.items.item[0].sido_sgg_nm,"전체사고",allAcc);
 
+  // 어린이 사고건수
   let kidAcc = `${data.items.item[1].acc_cnt}`;
   console.log(searchYearCd,data.items.item[0].sido_sgg_nm,"어린이사고",kidAcc)
 
+  // 구군 이름
   let gugunName = `${data.items.item[0].sido_sgg_nm}`.substring(6)
 
   console.log(data.items.item[1].tot_acc_cnt)
+
 
   const handleSelect = (code) => {
     setGuGun(code)
@@ -126,38 +129,45 @@ export default function App() {
 
   return (
     <div style={{margin: "1rem"}}>
-      <h2>{searchYearCd}년 서울특별시 {gugunName} 어린이 사고조회 &#128561;</h2>
+      <h2 className='text-3xl font-bold text-center border border-black '>
+        <span className='underline underline-offset-8'>
+          {searchYearCd}년&nbsp;
+        </span>
+        서울특별시 &nbsp;
+          <span id='selector'>
+              <button
+                onClick={open}
+                className="text-xl"
+              >{gugunName}   &#9661;</button>
+              <div id='list' className='hidden'>
+                {seoulGuguns.map(gugun => (
+                  <button
+                  key={gugun.code}
+                  onClick={() => handleSelect(gugun.code)}
+                  className="block hover:bg-yellow-600 p-2 w-full text-xl"
+                  >
+                    {gugun.name}
+                  </button>
+                ))}
+              </div>
+          </span>
+          &nbsp;어린이 사고조회
+      </h2>
 
       {/* <h3>조회하실 연도를 선택하십시오</h3> */}
-      <div className="">
-        <button onClick={() => setSearchYearCd(searchYearCd - 1)}>&#10094; 이전년도</button>
-        <button onClick={() => setSearchYearCd(searchYearCd + 1)} disabled={searchYearCd==2021}>다음년도 &#10095;</button>
+      <div className="text-center font-bold">
+        <button className='p-4' onClick={() => setSearchYearCd(searchYearCd - 1)} disabled={searchYearCd==2010}>&#10094; 이전년도</button>
+        <button className='p-4'onClick={() => setSearchYearCd(searchYearCd + 1)} disabled={searchYearCd==2021}>다음년도 &#10095;</button>
       </div>
-       
 
-        <>
-          <p id='pc-p' className='pfs'>{searchYearCd}년 전국에서 총 {data.items.item[0].tot_acc_cnt}건의 사고가 발생했습니다</p>
+      <div>
+        <p id='pc-p' className='pfs'><span className='text-2xl'> {searchYearCd}년 </span> 전국에서 <span className='underline underline-offset-8'>총 {data.items.item[0].tot_acc_cnt}건</span>의 사고가 발생했습니다</p>
 
-        <div id='selector'>
-          <button
-            onClick={open}
-          >{gugunName}   &#9661;</button>
-          <div id='list' className='hidden'>
-            {seoulGuguns.map(gugun => (
-              <button
-              key={gugun.code}
-              onClick={() => handleSelect(gugun.code)}
-              className="block hover:bg-yellow-600 p-2 w-full"
-              >
-                {gugun.name}
-              </button>
-            ))}
-          </div>
-        </div>
-       
+
+
         <div id='pc-info' className='cm cm-bc border'>
           <div className='chart cm-bc border ch-r'>
-            <h2 className='h2pl mb cm-bc td p-4 text-xl'>Chart▶</h2>
+            <h2 className='mb cm-bc td p-4 text-xl'>Chart▶</h2>
             <div className='cm-bc'>
               <h3 className='text-center mb-8'><span className='text-xl border-b-[4px] border-black p-2'><a className='font-bold text-3xl'>{gugunName}</a> 총 사고건수: {allAcc}</span></h3>
               <Rechart
@@ -168,43 +178,49 @@ export default function App() {
             </div>
           </div>
 
-         <div className='chart ch-l map'>
-         <h2 className='h2pl mb cm-bc td p-4 text-xl'>Map▶</h2>
-            <p className='h2pl'>지도를 확대 또는 축소할 수 있습니다</p>
-            <KakaoMap 
-              accidents={data.items.item}
-              seoulData={seoulData.items.item}
-              gugunName={gugunName}
-              setGuGun={setGuGun}
-            />
+          <div className='chart ch-l map p-4'>
+            <h2 className='mb cm-bc td text-xl'>Map▶</h2>
+            <p>지도를 확대 또는 축소할 수 있습니다</p>
+            <div className='kakao'>
+              <KakaoMap 
+                accidents={data.items.item}
+                seoulData={seoulData.items.item}
+                gugunName={gugunName}
+                setGuGun={setGuGun}
+              />
+            </div>
+            <p className='text-xl py-4'>선택한 지역: {gugunName}</p>
           </div>
         </div>
 
         <div id='mobile-info'>
           <div className='chart mo-chart cm-bc border ch-r'>
-          <h2 className='h2pl mb cm-bc td p-4 text-xl mb-8'>Chart▶</h2>
-          <div className='cm-bc'>
-            <h3 className='text-center'><span className='text-xl border-b-[4px] border-black p-2'><a className='font-bold text-3xl'>{gugunName}</a> 총 사고건수: {allAcc}</span></h3>
-            <Rechart
-              gugunName={gugunName}
-              data={data.items.item}
-              seoulData={seoulData.items.item}
-            />
-          </div>
+            <h2 className='mb cm-bc td p-4 text-xl mb-8'>Chart▶</h2>
+            <div className='cm-bc'>
+              <h3 className='text-center'><span className='text-xl border-b-[4px] border-black p-2'><a className='font-bold text-3xl'>{gugunName}</a> 총 사고건수: {allAcc}</span></h3>
+              <Rechart
+                gugunName={gugunName}
+                data={data.items.item}
+                seoulData={seoulData.items.item}
+              />
+            </div>
 
-            <div className='chart mo-map cm-bc flex flex-col justify-center items-center'>
-              <h2 className='h2pl mb cm-bc td p-4 text-xl self-start'>Map▶</h2>
-              <p className='h2pl cm-bc mb-4 self-start'>지도를 확대 또는 축소할 수 있습니다</p>
+            <div className='chart mo-map cm-bc p-4'>
+              <h2 className='mb cm-bc td text-xl self-start'>Map▶</h2>
+              <p className='cm-bc mb-4 self-start'>지도를 확대 또는 축소할 수 있습니다</p>
+              <div className='kakao'>
                 <KakaoMap 
                   accidents={data.items.item}
                   seoulData={seoulData.items.item}
                   gugunName={gugunName}
                   setGuGun={setGuGun}
                 />
+              </div>
+              <p className='text-xl py-4'>선택한 지역: {gugunName}</p>
             </div>
           </div>
         </div>
-      </>
+      </div>
     </div>    
   )
 }
@@ -239,7 +255,7 @@ function Rechart(props) {
   const COLORS = ['#000', '#F00'];
 
   return (
-    <div id='chartStyle' style={{ height: "550px", width: "100%" }}>
+    <div id='chartStyle' style={{ height: "500px", width: "100%" }}>
       <div id="circle1">
         <h3>서울시 대비 {gugunName} 총사고</h3>
         <PieChart width={480} height={200}>
@@ -314,7 +330,7 @@ function KakaoMap(props) {
   }
 
   return (
-    <div style={{width:"100%", height:"550px"}}>
+    <div style={{width:"100%", height:"500px"}}>
       <Map // 지도를 표시할 Container
         center={{
           // 지도의 중심좌표

@@ -82,14 +82,12 @@
 
 .chart {
   width: 100%;
-  height: 660px;
 }
 
 .cm {
   display: grid;
   grid-template-columns: 1fr 1fr;
   width: 100%;
-  height: 660px;
 }
 
 .mobile-photo {
@@ -105,13 +103,9 @@
 
 .mo-map {
   border-top: 15px solid rgb(239, 195, 92);
-  height: 530px;
   border-radius: 0 0 12px 12px;
 }
 
-.h2pl {
-  padding-left: 20px;
-}
 
 /* 수정 */
 .mb {
@@ -190,7 +184,10 @@ body {
 
 .pfs {
   font-size: 18px;
+  white-space: nowrap;
+  padding-bottom: 1rem;
 }
+
 
 /* 반응형 */
 #pc-header {
@@ -249,8 +246,8 @@ body {
 #selector > button {
   border: 4px solid black;
   padding: 0.5rem;
-  width: 100%;
-  display: block;
+  display: inline-flex;
+  justify-content: center;
   text-align: center;
   margin-bottom: 1rem;
   margin-left: 1rem;
@@ -259,16 +256,15 @@ body {
 #list {
   background-color: rgb(239, 195, 92);
   position: absolute;
-  left: 0;
+  left: 16px;
   width: 100%;
   z-index: 10;
   border: 4px solid black;
   height: 20rem;
   overflow: auto;
-  top: 40px;
+  top: 45px;
   border-top: 1px solid rgba(0, 0, 0, 0.5);
 }
-/* 여기까지 */
 
 
 #pc-info {
@@ -282,6 +278,11 @@ body {
 
   #selector > button {
     margin-left: 0;
+    left: 0px;
+  }
+
+  #list {
+    left: 0px;
   }
 
   #pc-info {
