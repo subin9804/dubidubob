@@ -138,7 +138,7 @@ export default function App() {
               <button
                 onClick={open}
                 className="text-xl"
-              >{gugunName}   &#9661;</button>
+              >{gugunName} &#9661;</button>
               <div id='list' className='hidden'>
                 {seoulGuguns.map(gugun => (
                   <button
